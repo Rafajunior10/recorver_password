@@ -1,40 +1,26 @@
-"use client";
+'use client'
 
-import { useState } from "react";
+import { useRouter } from 'next/navigation'
 
-export default function Page() {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("");
+export default function RedirectToResetPasswordPage() {
+  const router = useRouter()
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("Enviando...");
-
-    const res = await fetch("/api/reset", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
-
-    const data = await res.json();
-    setStatus(data.message);
-  };
+  const handleClick = () => {
+    router.push('/reset-password')
+  }
 
   return (
-    <main style={{ padding: "2rem" }}>
-      <h1>Recuperar Senha</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Digite seu e-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={{ padding: "0.5rem", marginRight: "0.5rem" }}
-        />
-        <button type="submit">Enviar</button>
-      </form>
-      {status && <p>{status}</p>}
-    </main>
-  );
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="w-full max-w-sm bg-white p-8 rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold text-center mb-6">Recuperar Senha</h2>
+
+        <button
+          onClick={handleClick}
+          className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 transition-colors"
+        >
+          Ir para redefinir senha
+        </button>
+      </div>
+    </div>
+  )
 }
